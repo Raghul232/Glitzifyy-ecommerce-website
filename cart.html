@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart | Glitzifyy</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .cart-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .cart-total {
+      font-size: 1.5rem;
+      margin-top: 30px;
+      text-align: right;
+    }
+    .btn-clear {
+      background: crimson;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Glitzifyy</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="cart.html" class="active">Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="products">
+    <h2>Your Cart</h2>
+    <div class="cart-grid" id="cartGrid"></div>
+    <div class="cart-total" id="cartTotal"></div>
+    <button class="btn-clear" onclick="clearCart()">Clear Cart</button>
+  </section>
+
+  <script>
+    fetch('http://localhost:4000/api/cart')
+      .then(res => res.json())
+      .then(cart => {
+        const grid = document.getElementById('cartGrid');
+        const totalBox = document.getElementById('cartTotal');
+        let total = 0;
+
+        cart.forEach(item => {
+          total += item.price * item.qty;
+
+          const card = document.createElement('div');
+          card.className = 'cart-card';
+          card.innerHTML = `
+            <img src="${item.image}" alt="${item.title}" style="width:100%; max-height:200px; object-fit:cover;">
+            <h3>${item.title}</h3>
+            <p>Price: ₹${item.price}</p>
+            <p>Quantity: ${item.qty}</p>
+          `;
+          grid.appendChild(card);
+        });
+
+        totalBox.innerHTML = `Total: ₹${total}`;
+      });
+
+    function clearCart() {
+      fetch('http://localhost:4000/api/cart', {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert('Cart cleared!');
+        location.reload();
+      });
+    }
+  </script>
+</body>
+</html>

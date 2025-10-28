@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glitzifyy | Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Glitzifyy</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="cart.html" class="cart">🛒 <span id="cartCount">0</span></a>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Elevate Your Style</h1>
+      <p>Discover premium fashion accessories for every occasion.</p>
+      <a href="shop.html" class="btn">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="products">
+    <h2>Categories</h2>
+    <div class="product-grid" id="productGrid">
+      <!-- Dynamic cards will be injected here -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 Glitzifyy. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Load products dynamically
+    fetch('http://localhost:4000/api/products')
+      .then(res => res.json())
+      .then(products => {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = '';
+
+        products.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          card.innerHTML = `
+            <img src="${p.image}" alt="${p.title}">
+            <h3>${p.title}</h3>
+            <p style="font-size: larger;">₹${p.price}</p>
+            <a href="${p.link}"><button class="btn">View Product</button></a>
+          `;
+          grid.appendChild(card);
+        });
+      });
+
+    // Update cart count
+    function updateCartCount() {
+      fetch('http://localhost:4000/api/cart')
+        .then(res => res.json())
+        .then(cart => {
+          const count = cart.reduce((sum, item) => sum + item.qty, 0);
+          document.getElementById('cartCount').textContent = count;
+        });
+    }
+
+    updateCartCount();
+  </script>
+</body>
+</html>

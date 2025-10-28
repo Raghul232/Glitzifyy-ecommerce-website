@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Glitzifyy</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Custom styling for 3 products per row -->
+  <style>
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 products per row */
+      gap: 30px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 per row on tablets */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-grid {
+        grid-template-columns: 1fr; /* 1 per row on small phones */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Glitzifyy</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="cart.html" class="cart">🛒 <span id="cartCount">0</span></a>
+  </header>
+
+  <!-- Shop Section -->
+  <section class="products">
+    <h2>Shop All Products</h2>
+    <div class="product-grid">
+      
+      <!-- Product 1 -->
+      <div class="product-card">
+        <img src="images/polaroids.jpg" alt="Premium Polaroids">
+        <h3>Premium Polaroids - Pack of 10</h3>
+        <p>₹249</p>
+        <a><button class="btn add-to-cart" data-id="1">Add to cart</button></a>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <img src="images/wallposter.jpg" alt="Wall Poster - 300gsm">
+        <h3>Premium Wall Posters📸</h3>
+        <p>₹149</p>
+        <a ><button class="btn add-to-cart" data-id="2">Add to cart</button></a>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <img src="images/pintrest.jpg" alt="Pinterest Finds">
+        <h3>Pinterest Finds</h3>
+        <p>₹499</p>
+        <a ><button class="btn add-to-cart" data-id="3">Add to cart</button></a>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card">
+        <img src="images/pintrest.jpg" alt="Glow and gift sets">
+        <h3>Glow and gift sets</h3>
+        <p>₹499</p>
+        <a href="product-giftsets.html"><button class="btn add-to-cart" data-id="4">View Product</button></a>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card">
+        <img src="images/pintrest.jpg" alt="Customized Bracelets">
+        <h3>Customized Bracelets</h3>
+        <p>₹499</p>
+        <a href="product-bracelets.html"><button class="btn add-to-cart" data-id="5">View Product</button></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 Glitzifyy. All rights reserved.</p>
+  </footer>
+  <script>
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', () => {
+    const productId = parseInt(button.getAttribute('data-id'));
+
+    fetch('http://localhost:4000/api/cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productId })
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert('Added to cart!');
+    })
+    .catch(err => {
+      console.error('Error adding to cart:', err);
+      alert('Failed to add to cart.');
+    });
+  });
+});
+</script>
+<script>
+fetch('http://localhost:4000/api/cart')
+  .then(res => res.json())
+  .then(cart => {
+    const count = cart.reduce((sum, item) => sum + item.qty, 0);
+    document.getElementById('cartCount').textContent = count;
+  });
+</script>
+</body>
+</html>

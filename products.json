@@ -1,0 +1,59 @@
+[
+  {
+    "id": 1,
+    "title": "Premium Polaroids - Pack of 10",
+    "price": 249,
+    "image": "images/polaroids.jpg",
+    "description": "Aesthetic polaroid prints to decorate your space",
+    "link": "product.html"
+  },
+  {
+    "id": 2,
+    "title": "Premium Wall Posters📸",
+    "price": 149,
+    "image": "images/wallposter.jpg",
+    "description": "300gsm matte finish posters with vibrant designs",
+    "link": "wall_poster.html"
+  },
+  {
+    "id": 3,
+    "title": "Pinterest Finds",
+    "price": 499,
+    "image": "images/pintrest.jpg",
+    "description": "Curated bouquet-style aesthetic gifts",
+    "link": "pintrest.html"
+  },
+  {
+    "id": 4,
+    "title": "Glow and gift sets",
+    "price": 499,
+    "image": "images/match1.jpg",
+    "description": "Festive glow kits and gifting combos",
+    "link": "gift_bundle.html"
+  },
+  {
+    "id": 5,
+    "title": "Customized Bracelets",
+    "price": 499,
+    "image": "images/bracelet.jpeg",
+    "description": "Personalized bracelet sets for gifting or styling",
+    "link": "custom_polaroid.html"
+  },
+  {
+    "id": 6,
+    "title": "Polaroids Pack (10 pcs)",
+    "price": 99,
+    "image": "images/polaroids.jpg",
+    "description": "Handheld polaroid-style prints for aesthetic decor",
+    "link": "product.html"
+  },
+  {
+    "id": 7,
+    "title": "Wall Poster - 300gsm",
+    "price": 149,
+    "image": "images/wallposter.jpg",
+    "description": "Set of 8 car-themed posters with bold visuals",
+    "link": "product.html"
+  }
+
+]
